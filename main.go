@@ -12,5 +12,7 @@ func main() {
 	database.ConnectNeo4j()
 
 	router := gin.Default()
+
 	router.Run(":8080")
+
 }
