@@ -16,3 +16,26 @@ Content-Type: application/json
 
 ###
 GET localhost:8080/user?name=park
+
+
+###
+POST localhost:8080/user/create
+Content-Type: application/json
+
+{
+  "userId": "test12",
+  "profile": "asdfas12"
+}
+
+###
+POST localhost:8080/friendship/create
+Content-Type: application/json
+
+{
+  "user1Id": "test",
+  "user2Id": "test12"
+}
+
+
+###
+GET localhost:8080/friendship/list?userId=test
