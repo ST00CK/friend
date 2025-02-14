@@ -1,10 +1,10 @@
-FROM golang:1.23.4-slim
+FROM golang:1.23-alpine
 
 WORKDIR /app
 
 COPY . .
 
 RUN go mod tidy
-RUN go build -o server ./src/server.go
+RUN go build -o server ./main.go
 
 CMD ["/app/server"]
