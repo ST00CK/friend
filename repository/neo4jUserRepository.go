@@ -106,7 +106,7 @@ func (r *neo4jUserRepository) GetUserNode(ctx context.Context, userID string) (i
 
 		record, err := res.Single(ctx)
 		if err != nil {
-			return nil, err
+			return nil, nil
 		}
 
 		// record.Values[0]에 생성(또는 조회)된 노드가 담겨 있음
