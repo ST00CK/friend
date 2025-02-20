@@ -92,8 +92,8 @@ func (r *neo4jUserRepository) GetUserNode(ctx context.Context, userID string) (i
 	result, err := session.ExecuteWrite(ctx, func(tx neo4j.ManagedTransaction) (interface{}, error) {
 		// userID 기준으로 노드가 없으면 생성, 존재하면 profile 업데이트
 		query := `
-			MATCH (u:User {id: $userID})
-			RETURN u
+			MATCH (me:User {id: $userID})-[:FRIEND]->(friend:User)
+			RETURN friend
 		`
 		params := map[string]interface{}{
 			"userID": userID,
@@ -127,13 +127,12 @@ func (r *neo4jUserRepository) CreateUserRelation(ctx context.Context, userID str
 		query := `
 			MATCH (u:User {id: $userID})
 			MATCH (t:User {id: $targetUserID})
-			MERGE (u)-[r:$relation]->(t)
+			MERGE (u)-[r: FRIEND]->(t)
 			RETURN r
 		`
 		params := map[string]interface{}{
 			"userID":       userID,
 			"targetUserID": targetUserID,
-			"relation":     relation,
 		}
 
 		res, err := tx.Run(ctx, query, params)
@@ -164,7 +163,7 @@ func (r *neo4jUserRepository) DeleteUserRelation(ctx context.Context, userID str
 		query := `
 			MATCH (u:User {id: $userID})
 			MATCH (t:User {id: $targetUserID})
-			MATCH (u)-[r:$relation]->(t)
+			MATCH (u)-[r:FRIEND]->(t)
 			DELETE r
 		`
 		params := map[string]interface{}{

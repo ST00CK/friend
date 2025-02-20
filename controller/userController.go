@@ -3,6 +3,7 @@ package controller
 import (
 	"Friend/dto"
 	"Friend/service"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -11,6 +12,7 @@ func CreateUserNode(c *gin.Context) {
 	user := dto.UserDto{}
 	err := c.BindJSON(&user)
 	if err != nil {
+		fmt.Println("err: ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "요청 형식이 잘못되었습니다."})
 		return
 	}
@@ -32,6 +34,7 @@ func CreateFriendship(c *gin.Context) {
 	friendship := dto.FriendshipDto{}
 	err := c.BindJSON(&friendship)
 	if err != nil {
+		fmt.Println("err: ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "요청 형식이 잘못되었습니다."})
 		return
 	}
@@ -45,6 +48,7 @@ func DeleteFriendship(c *gin.Context) {
 	friendship := dto.FriendshipDto{}
 	err := c.BindJSON(&friendship)
 	if err != nil {
+		fmt.Println("err: ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "요청 형식이 잘못되었습니다."})
 		return
 	}
@@ -55,10 +59,10 @@ func DeleteFriendship(c *gin.Context) {
 }
 
 func GetFriends(c *gin.Context) {
-	userID := c.Param("userId")
-
+	userID := c.Query("userID")
 	res, err := service.GetFriends(userID)
 	if err != nil {
+		fmt.Println("err: ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "유저 노드를 찾을 수 없습니다."})
 		return
 	}
