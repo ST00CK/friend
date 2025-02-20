@@ -104,13 +104,17 @@ func (r *neo4jUserRepository) GetUserNode(ctx context.Context, userID string) (i
 			return nil, err
 		}
 
-		record, err := res.Single(ctx)
-		if err != nil {
-			return nil, nil
+		var friends []interface{}
+		for res.Next(ctx) {
+			record := res.Record()
+			friendNode, found := record.Get("friend")
+			if !found {
+				continue // "friend" 키가 없으면 다음 레코드로 건너뜁니다.
+			}
+			friends = append(friends, friendNode)
 		}
 
-		// record.Values[0]에 생성(또는 조회)된 노드가 담겨 있음
-		return record.Values[0], nil
+		return friends, nil
 	})
 	if err != nil {
 		return nil, err
