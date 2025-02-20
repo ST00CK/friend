@@ -144,7 +144,6 @@ func (r *neo4jUserRepository) CreateUserRelation(ctx context.Context, userID str
 		if err != nil {
 			return nil, err
 		}
-
 		// record.Values[0]에 생성(또는 조회)된 노드가 담겨 있음
 		return record.Values[0], nil
 	})
@@ -161,29 +160,18 @@ func (r *neo4jUserRepository) DeleteUserRelation(ctx context.Context, userID str
 	result, err := session.ExecuteWrite(ctx, func(tx neo4j.ManagedTransaction) (interface{}, error) {
 		// userID 기준으로 노드가 없으면 생성, 존재하면 profile 업데이트
 		query := `
-			MATCH (u:User {id: $userID})
-			MATCH (t:User {id: $targetUserID})
-			MATCH (u)-[r:FRIEND]->(t)
-			DELETE r
-		`
+            MATCH (u:User {id: $userID})-[r:FRIEND]-(t:User{id: $targetUserID})
+            DELETE r 
+        `
 		params := map[string]interface{}{
 			"userID":       userID,
 			"targetUserID": targetUserID,
-			"relation":     relation,
 		}
-
-		res, err := tx.Run(ctx, query, params)
+		_, err := tx.Run(ctx, query, params) // res 변수 사용하지 않음
 		if err != nil {
 			return nil, err
 		}
-
-		record, err := res.Single(ctx)
-		if err != nil {
-			return nil, err
-		}
-
-		// record.Values[0]에 생성(또는 조회)된 노드가 담겨 있음
-		return record.Values[0], nil
+		return nil, nil // 삭제 작업은 결과를 반환하지 않으므로 nil 반환
 	})
 	if err != nil {
 		return nil, err
