@@ -23,9 +23,17 @@ func CreateUserNode(c *gin.Context) {
 }
 
 func DeleteUserNode(c *gin.Context) {
-	userID := c.Param("userID")
+	user := dto.UserDto{}
+	err := c.BindJSON(&user)
 
-	service.DeleteUserNode(userID)
+	if err != nil {
+		fmt.Println("err: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "요청 형식이 잘못되었습니다."})
+		return
+	}
+
+	fmt.Println("userID: ", user.UserID)
+	service.DeleteUserNode(user.UserID)
 
 	c.JSON(http.StatusOK, gin.H{"message": "유저 노드 삭제 완료"})
 }
