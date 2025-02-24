@@ -71,13 +71,8 @@ func (r *neo4jUserRepository) DeleteUserNode(ctx context.Context, userID string)
 			return nil, err
 		}
 
-		record, err := res.Single(ctx)
-		if err != nil {
-			return nil, err
-		}
-
 		// record.Values[0]에 생성(또는 조회)된 노드가 담겨 있음
-		return record.Values[0], nil
+		return res, nil
 	})
 	if err != nil {
 		return nil, err
