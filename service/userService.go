@@ -25,6 +25,15 @@ func DeleteUserNode(userID string) {
 	}
 }
 
+func EditUserNode(user dto.UserDto) {
+	neo4jUserRepository := repository.NewNeo4jUserRepository(database.Driver)
+
+	_, err := neo4jUserRepository.EditUserNode(context.Background(), user.UserID, user.Profile)
+	if err != nil {
+		return
+	}
+}
+
 func CreateFriendship(user1ID string, user2ID string) {
 	neo4jFriendRepository := repository.NewNeo4jUserRepository(database.Driver)
 

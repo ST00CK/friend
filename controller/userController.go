@@ -38,6 +38,20 @@ func DeleteUserNode(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "유저 노드 삭제 완료"})
 }
 
+func EditUserNode(c *gin.Context) {
+	user := dto.UserDto{}
+	err := c.BindJSON(&user)
+	if err != nil {
+		fmt.Println("err: ", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "요청 형식이 잘못되었습니다."})
+		return
+	}
+
+	service.EditUserNode(user)
+
+	c.JSON(http.StatusOK, gin.H{"message": "유저 노드 수정 완료"})
+}
+
 func CreateFriendship(c *gin.Context) {
 	friendship := dto.FriendshipDto{}
 	err := c.BindJSON(&friendship)

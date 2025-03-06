@@ -80,6 +80,41 @@ func (r *neo4jUserRepository) DeleteUserNode(ctx context.Context, userID string)
 	return result, nil
 }
 
+func (r *neo4jUserRepository) EditUserNode(ctx context.Context, userID string, profile string) (interface{}, error) {
+	session := r.driver.NewSession(ctx, neo4j.SessionConfig{DatabaseName: "neo4j"})
+	defer session.Close(ctx)
+
+	result, err := session.ExecuteWrite(ctx, func(tx neo4j.ManagedTransaction) (interface{}, error) {
+		// userID 기준으로 노드가 없으면 생성, 존재하면 profile 업데이트
+		query := `
+			MATCH (u:User {id: $userID})
+			SET u.profile = $profile
+			RETURN u
+		`
+		params := map[string]interface{}{
+			"profile": profile,
+			"userID":  userID,
+		}
+
+		res, err := tx.Run(ctx, query, params)
+		if err != nil {
+			return nil, err
+		}
+
+		record, err := res.Single(ctx)
+		if err != nil {
+			return nil, err
+		}
+
+		// record.Values[0]에 생성(또는 조회)된 노드가 담겨 있음
+		return record.Values[0], nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 func (r *neo4jUserRepository) GetUserNode(ctx context.Context, userID string) (interface{}, error) {
 	session := r.driver.NewSession(ctx, neo4j.SessionConfig{DatabaseName: "neo4j"})
 	defer session.Close(ctx)

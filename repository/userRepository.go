@@ -10,6 +10,8 @@ type UserRepository interface {
 	// DeleteUserNode User 노드를 삭제합니다.
 	DeleteUserNode(ctx context.Context, userID string) (interface{}, error)
 
+	EditUserNode(ctx context.Context, userID string, profile string) (interface{}, error)
+
 	// GetUserNode User 노드를 조회합니다.
 	GetUserNode(ctx context.Context, userID string) (interface{}, error)
 
