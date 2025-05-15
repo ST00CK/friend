@@ -5,6 +5,16 @@
 🧱 개요
 
 Friend 애플리케이션은 계층화된 아키텍처 패턴을 따르며, 다음과 같이 명확하게 분리된 계층으로 구성됩니다:
+[main.go]
+   |
+   v
+[controller/userController.go]
+   |
+   v
+[service/userService.go]
+   |
+   v
+[repository/neo4jUserRepository.go]
 
 API 계층: Gin 웹 프레임워크를 사용하여 HTTP 요청과 응답을 처리합니다.
 
