@@ -39,11 +39,11 @@ Friend 애플리케이션은 계층화된 아키텍처 패턴을 따르며, 다�
 ## **컨트롤러**
 
 컨트롤러 계층은 HTTP 요청을 처리하고 이를 서비스 호출로 변환합니다. 주요 컨트롤러는 userController.go로, 다음 엔드포인트를 관리합니다:
-
-| 엔드포인트 |	메소드 |	설명 | 코드 | 참조 |
-|/user/create|	POST|	새 사용자 노드 생성|	userController.go:11-23|
-|/user/delete|	POST|	사용자 노드 삭제|	userController.go:25-39|
-|/user/edit|	POST|	사용자 프로필 업데이트|	userController.go:41-53|
-|/friendship/create|	POST|	사용자 간 친구 관계 생성|	userController.go:55-67|
-|/friendship/delete|	POST|	친구 관계 제거|	userController.go:69-81|
-|/friends|	GET|	사용자의 친구 목록 조회|	userController.go:83-93|
+| 엔드포인트             | 메소드 | 설명                     | 코드 참조 
+|------------------------|--------|--------------------------|--------------------------------|
+| `/user/create`         | POST   | 새 사용자 노드 생성      | `userController.go:11-23`      |                         
+| `/user/delete`         | POST   | 사용자 노드 삭제         | `userController.go:25-39`      |                         
+| `/user/edit`           | POST   | 사용자 프로필 업데이트   | `userController.go:41-53`      |                         
+| `/friendship/create`   | POST   | 사용자 간 친구 관계 생성 | `userController.go:55-67`      |                         
+| `/friendship/delete`   | POST   | 친구 관계 제거           | `userController.go:69-81`      |  
+| `/friends`             | GET    | 사용자의 친구 목록 조회  | `userController.go:83-93`      |
