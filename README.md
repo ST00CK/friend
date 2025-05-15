@@ -28,6 +28,9 @@ API 계층: HTTP 요청과 응답을 처리하며, Gin 웹 프레임워크를 �
 
 ![image](https://github.com/user-attachments/assets/4e5f41f0-446b-415e-8a36-000add0c1a7f)
 
+![image](https://github.com/user-attachments/assets/09c7e8a2-ce89-48f9-a8ac-7c1fde9e5373)
+
+
 🔁 요청 처리 흐름
 
 일반적인 요청은 다음과 같은 순서로 시스템을 통해 처리됩니다:
