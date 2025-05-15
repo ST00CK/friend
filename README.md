@@ -26,16 +26,8 @@ API 계층: HTTP 요청과 응답을 처리하며, Gin 웹 프레임워크를 �
 
 다음 다이어그램은 시스템의 주요 구성 요소와 파일 간의 관계를 보여줍니다:
 
-[main.go]
-   |
-   v
-[controller/userController.go]
-   |
-   v
-[service/userService.go]
-   |
-   v
-[repository/neo4jUserRepository.go]
+![Uploading image.png…]()
+
 
 🔁 요청 처리 흐름
 
